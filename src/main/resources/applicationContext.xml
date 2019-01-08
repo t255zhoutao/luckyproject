@@ -11,24 +11,36 @@
 	http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 	
 	<!--1、 配置Datasource -->
-	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver"/>
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/luckymysql"/>
+		<property name="user" value="root"/>
+		<property name="password" value="lw"/>
+	</bean>
 	
 	<!-- 2、 配置SessionFactory -->
-	
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- sqlsession依赖注入datasource -->
+		<property name="dataSource" ref="dataSource"/>
+		<!-- 管理mybatis映射文件 -->
+		<property name="mapperLocations" value="classpath:com/lucky/ssm/bean/*.xml"></property>
+		<!-- 给bean包取别名 -->
+		<property name="typeAliasesPackage" value="com.lucky.ssm.bean"></property>
+	</bean>
 	
 	<!--3、 配置Dao bean -->
+	<bean id="companyDaoImpl" class="com.lucky.ssm.dao.impl.CompanyDaoImpl">
+		<!-- 依赖sqlsessionFactory注入 -->
+		<property name="sqlsessionFactory" ref="sqlSessionFactoryBean"/>
+	</bean>
 	
+ 	<!-- 4、声明式事务bean -->
+	<bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
 	
- 	<!--4、 配置Service bean -->
-	
-	
-	<!-- 5、声明式事务bean -->
-	
-	
-	<!-- 6、配置aop切面 -->
-	
-	
-	<!-- 7、配置事务的通知 -->
+	<!-- 5、基于注解声明式事务完成事务的切面 -->
+	<tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>
 	
 </beans>
 

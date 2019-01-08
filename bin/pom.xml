@@ -62,13 +62,6 @@
 	    <version>${log4j.version}</version>
 	</dependency>
 	
-	<!-- Aspectjweaver -->
-	<dependency>
-	    <groupId>org.aspectj</groupId>
-	    <artifactId>aspectjweaver</artifactId>
-	    <version>1.8.9</version>
-	</dependency>
-	
 	<!-- Servlet -->
 	<dependency>
 	    <groupId>javax.servlet</groupId>
@@ -76,14 +69,6 @@
 	    <version>${servlet.version}</version>
 	    <scope>provided</scope>
 	</dependency>
-	
-	<!-- Jstl -->
-	<dependency>
-	    <groupId>javax.servlet</groupId>
-	    <artifactId>jstl</artifactId>
-	    <version>1.2</version>
-	</dependency>
-	
   </dependencies>
   
   <properties>
